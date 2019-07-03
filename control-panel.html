@@ -1,0 +1,282 @@
+<!-- this page is a control panel for your smart dorm room / apartment -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Control Panel</title>
+  <link rel="icon" type="image/ico" href="media/icons/screwdriver-wrench.png" />
+  <meta name="description" content="Control panel for all sensors and data.">
+  <meta name="author" content="Blake Edwards">
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="js/plotly-latest.min.js"></script>
+  <script src="js/scripts.js"></script> <!-- load the script here in order to interact with the elements after they load -->
+  <style>
+    body {
+      background-color: #141852
+    }
+  </style>
+</head>
+
+<body>
+  <!-- the header -->
+  <header>
+      <div class="navbar navbar-dark bg-dark shadow-sm">
+          <div class="container d-flex justify-content-between">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+              <img src="media/icons/screwdriver-wrench.svg" alt="control panel icon" id="tool-icon">
+              <strong>Control Panel</strong>
+            </a>      
+            <div class="dropdown">
+              <button onclick="dropDownMenuToggle()" class="dropbtn">
+                Menu
+              </button>
+              <div id="myDropdown" class="dropdown-content">
+                <!-- <button onClick="openSettings()" id="settingsButton" type="button" class="btn btn-primary">Settings</button>
+                <button onClick="restart()" id="restartButton" type="button" class="btn btn-danger">Restart</button> -->
+                <a href="http://thoughtcatalyst.org/me">Home</a>
+                <a onClick="restart()">Restart</a>
+                <a onClick="openSettings()">Settings</a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+    </header>
+    
+    <!-- controls over modules pane -->
+
+    <!-- the control pane area -->
+    <div style="padding: 30px">
+        <div class="container">
+            <div id="control-panel-panes" class="container" align="center">
+                <div class="row">
+                    <div id="control-panel-pane-frame" class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <br/><b>Door Status</b><br/>
+                            <i onClick="tileSettings()" class="down"></i>
+                            <span id="lock-status-dot" class="dot"></span>
+                            <div align="center" id="lock-status-box">
+                                <div>
+                                  <p id="lock-status-box-text" style="color: black"><b>Unlocked</b></p>
+                                </div>
+                            </div>
+                            <div id="door-state-button-wrapper">
+                              <button id="door-state-button" type="button" class="btn btn-secondary" onclick="toggleLock()">Lock</button>
+                            </div> 
+                          </div>
+                    </div>
+
+                    <div id="control-panel-pane-frame" class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <br/><b>Room Status</b><br/>
+                            <i onClick="tileSettings()" class="down"></i>
+                            <span id="room-status-dot" class="dot"></span>
+                            <div id="room-status-box">
+                              </br><b>Not Occupied</b></br></br>
+                            </div>
+                          </div>
+                    </div>
+
+                    <div id="control-panel-pane-frame" class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <br/><b>Server Status</b><br/>
+                            <i onClick="tileSettings()" class="down"></i>
+                            <span id="server-status-dot" class="dot"></span>
+                              <div id="server-status-box">
+                                <b>Last Login: n/a</b><br/>
+                                <b>IP: n/a</b><br/>
+                                <b>Latency: n/a</b><br/>
+                              </div>
+                          </div>
+                      </div> 
+                    
+                </div>
+
+
+                <div class="row">
+
+                      <div id="control-panel-pane-frame" class="col-md-4">
+                          <div class="card mb-4 shadow-sm">
+                              <br/><b>Detected Room Visitors</b><br/>
+                              <i onClick="tileSettings()" class="down"></i>
+                              <span id="face-detect-status-dot" class="dot"></span>
+                                <div id="face-detect-status-box">
+                                  <br/><b>NO VISITORS DETECTED</b><br/><br/><br/>
+                                </div>
+                            </div>
+                        </div> 
+
+                      <div id="control-panel-pane-frame" class="col-md-4">
+                          <div class="card mb-4 shadow-sm">
+                              <i onClick="tileSettings()" class="down"></i>
+                              <br/><b>Internet Latency</b><br/>
+                              <!-- TODO  play and pause button -->
+                                  <!-- Internet speed chart -->
+                                  <div id="chart"></div>
+                            </div>
+                        </div> 
+
+                    <div id="control-panel-pane-frame" class="col-md-4">
+                        <div class="card mb-4 shadow-sm">
+                            <i onClick="tileSettings()" class="down"></i>
+                            <br/><b>Hall Visitors</b><br/>
+                            <div id="hall-visitors-box">
+                              <table id="probe-request-table">
+                                  <tr>
+                                    <th>ESSID</th>
+                                    <th>Name</th>
+                                    <th>MAC Address</th>  
+                                  </tr>
+                                  <tr>
+                                    <td>EdwardsHome</td>
+                                    <td>Blakes-MBPro</td>
+                                    <td>DA-1A-43-CB-74-77</td>
+                                  </tr>
+                                  <tr>
+                                      <td>AirB&B</td>
+                                      <td>Blakes-MBPro</td>
+                                      <td>DA-1A-43-CB-74-77</td>
+                                    </tr>
+                                </table>
+                            </div>
+                          
+                          </div>
+                    </div>
+                
+                  </div>
+                  
+
+                  <div class="row">
+
+                      <div id="control-panel-pane-frame" class="col-md-4">
+                          <div class="card mb-4 shadow-sm">
+                              <i onClick="tileSettings()" class="down"></i>
+                              <br/><b>Network Visitors</b><br/>
+                              <div id="network-visitors-box"> 
+                                  <table id="probe-request-table">
+                                      <tr>
+                                        <th>IP</th>
+                                        <th>Name</th>
+                                      </tr>
+                                      <tr>
+                                          <td>192.168.0.1</td>
+                                          <td>AirB&B</td>
+                                        </tr>
+                                      <tr>
+                                        <td>192.168.0.6</td>
+                                        <td>Blakes-MBPro</td>
+                                      </tr>
+                                      <tr>
+                                          <td>192.168.0.8</td>
+                                          <td>Blakes-IPhone</td>
+                                      </tr>
+                                      <tr>
+                                          <td>192.168.0.30</td>
+                                          <td>Marc-Edwards-IPhone</td>
+                                      </tr>
+                                      <tr>
+                                          <td>192.168.0.56</td>
+                                          <td>MB-Pro</td>
+                                      </tr>
+                                    </table>
+                              </div>
+                            </div>
+                      </div>
+              
+                  </div>
+              </div> 
+        </div>
+      </div>
+
+      <!-- internet speed chart code -->
+      <script>
+          // drop down menu code
+          function dropDownMenuToggle() {
+            document.getElementById("myDropdown").classList.toggle("show");
+          }
+
+          // Close the dropdown if the user clicks outside of it
+          window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+              var dropdowns = document.getElementsByClassName("dropdown-content");
+              var i;
+              for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                  openDropdown.classList.remove('show');
+                }
+              }
+            }
+          }
+
+        // live graph code
+        //retrieving internet latency points from a file
+        var value = 0;
+        function getNextInternetLatencyPoint()
+          {
+              var xhttp = new XMLHttpRequest();
+              xhttp.open("GET", "media/data/internet_latency.txt", true);
+              xhttp.send();
+              xhttp.onreadystatechange = function()
+              {
+                  if (this.readyState = 4 && this.status == 200)
+                  {
+                          var response = this.responseText.split("\n");
+                          if (response[0] != null && response[0] != "" && !isNaN(parseFloat(response[0]))){
+                            value = parseFloat(response[response.length-1]);
+                          }      
+                  }
+              };  
+              return value;    
+          }
+          var count = 0
+          var max = 0;
+          var data = [
+            {
+              y:[0],
+              type: 'scatter'
+            }];
+
+            var layout = {
+                  autosize: true,
+                  width: 300,
+                  height: 200,
+                  margin: {
+                    l: 20,
+                    r: 10,
+                    b: 20,
+                    t: 10,
+                    pad: 0
+                  },
+                  paper_bgcolor: '#ffffff',
+                  plot_bgcolor: '#ffffff'
+                };
+          
+          Plotly.plot('chart', data, layout);
+
+          setInterval(function(){
+              console.log("Plotting...");
+              var nextPoint = getNextInternetLatencyPoint();
+              if (nextPoint != null)
+              {
+                Plotly.extendTraces('chart', { y: [[nextPoint]] }, [0]);
+                count++;
+                if (count>10)
+                {
+                  Plotly.relayout('chart',{
+                    xaxis: {
+                      range: [count-10, count],
+                      zeroline: true
+                    }
+                  });
+              }
+            }     
+          }, 1000);
+
+          
+      </script>
+
+</body>
+</html>
+
