@@ -4,8 +4,6 @@
 
 # import the necessary packages
 import datetime
-from picamera.array import PiRGBArray
-from picamera import PiCamera
 from imutils.video import VideoStream
 import argparse
 import datetime
@@ -23,9 +21,7 @@ args = vars(ap.parse_args())
 if args.get("video", None) is None:
 	print("Using built in web cam...")
 	# initialize the camera and grab a reference to the raw camera capture
-	camera = PiCamera()
-	rawCapture = PiRGBArray(camera)
-	camera.capture(rawCapture, format="bgr")
+	vs = VideoStream(src=0).start()
 	time.sleep(2.0)
 # otherwise, we are reading from a video file
 else:
@@ -41,7 +37,7 @@ print("[+] Starting security feed...")
 # loop over the frames of the video
 while True:
 	# grab the current frame and initialize the occupied/unoccupied text
-	frame = rawCapture.array
+	frame = vs.read()
 	frame = frame if args.get("video", None) is None else frame[1]
 	text = "Unoccupied"
 
