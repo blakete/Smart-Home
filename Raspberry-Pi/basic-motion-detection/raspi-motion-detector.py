@@ -42,6 +42,10 @@ print("[+] Starting security feed...")
 # loop over the frames of the video
 # capture frames from the camera
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+	
+	# clear stream before next frame
+	rawCapture.truncate(0)
+
 	# grab the current frame and initialize the occupied/unoccupied text
 	frame = frame.array
 	frame = frame if args.get("video", None) is None else frame[1]
@@ -104,9 +108,6 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		print("%s Current Status: %s" % (dt, text))
 	# setting to only display status upon change
 	previousText = text
-
-	# clear stream before next frame
-	rawCapture.truncate(0)
 
 	# if the `q` key is pressed, break from the lop
 	if key == ord("q"):
