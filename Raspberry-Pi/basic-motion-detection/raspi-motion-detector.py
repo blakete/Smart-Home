@@ -42,7 +42,6 @@ print("[+] Starting security feed...")
 # loop over the frames of the video
 # capture frames from the camera
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-	print("Grabbing and processing frame...")
 	# clear stream before next frame
 	rawCapture.truncate(0)
 
