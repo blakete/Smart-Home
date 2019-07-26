@@ -88,8 +88,8 @@ while True:
 
 	# show the frame and record if the user presses a key
 	cv2.imshow("Security Feed", frame)
-	#cv2.imshow("Thresh", thresh)
-	#cv2.imshow("Frame Delta", frameDelta)
+	cv2.imshow("Thresh", thresh)
+	cv2.imshow("Frame Delta", frameDelta)
 	key = cv2.waitKey(1) & 0xFF
 
 	# indicate if their is a change in room status in the console
