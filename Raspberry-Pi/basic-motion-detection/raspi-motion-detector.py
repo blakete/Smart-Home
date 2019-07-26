@@ -105,6 +105,9 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# setting to only display status upon change
 	previousText = text
 
+	# clear stream before next frame
+	rawCapture.truncate(0)
+
 	# if the `q` key is pressed, break from the lop
 	if key == ord("q"):
 		break
