@@ -42,7 +42,7 @@ print("[+] Starting security feed...")
 # loop over the frames of the video
 # capture frames from the camera
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-	
+	print("Grabbing and processing frame...")
 	# clear stream before next frame
 	rawCapture.truncate(0)
 
@@ -97,7 +97,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		(10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
 
 	# show the frame and record if the user presses a key
-	cv2.imshow("Security Feed", frame)
+	#cv2.imshow("Security Feed", frame)
 	#cv2.imshow("Thresh", thresh)
 	#cv2.imshow("Frame Delta", frameDelta)
 	key = cv2.waitKey(1) & 0xFF
