@@ -21,11 +21,12 @@ args = vars(ap.parse_args())
 
 # if the video argument is None, then we are reading from webcam
 if args.get("video", None) is None:
-	print("Using built in web cam...")
+	print("Using raspi camera...")
 	# initialize the camera and grab a reference to the raw camera capture
 	camera = PiCamera()
-	rawCapture = PiRGBArray(camera)
-	camera.capture(rawCapture, format="bgr")
+	camera.resolution = (640, 480)
+	camera.framerate = 32
+	rawCapture = PiRGBArray(camera, size=(640, 480))
 	time.sleep(2.0)
 # otherwise, we are reading from a video file
 else:
@@ -39,9 +40,10 @@ previousText = "Unoccupied"
 
 print("[+] Starting security feed...")
 # loop over the frames of the video
-while True:
+# capture frames from the camera
+for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
 	# grab the current frame and initialize the occupied/unoccupied text
-	frame = rawCapture.array
+	frame = frame.array
 	frame = frame if args.get("video", None) is None else frame[1]
 	text = "Unoccupied"
 
