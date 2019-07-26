@@ -10,6 +10,10 @@
     position: right;
 }
 
+.card {
+    min-height: 227px !important; 
+}
+
 .dropbtn {
     background-color: #3d8fce;
     color: white;
@@ -57,7 +61,7 @@
 
 
 #control-panel-panes {
-    background-color: white;
+    background-color: #E3E3E3;
     outline: 2px solid black;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -67,9 +71,7 @@
 }
 
 #control-panel-pane-frame {
-    outline: 1px solid black;
-    padding-top: 15px;
-    margin-top: 10px;
+    padding: 15px;
     width:auto;
 }
 
@@ -184,7 +186,7 @@ i:hover {
 }
 
 #probe-request-table {
-    width: 100%;
+    /* width: 80%; */
 }
 
 table, th, td {
