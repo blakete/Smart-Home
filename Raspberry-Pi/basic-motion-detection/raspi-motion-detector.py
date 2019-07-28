@@ -98,8 +98,8 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# draw the text and timestamp on the frame
 	#cv2.putText(frame, "Room Status: {}".format(text), (10, 20),
 	#	cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
-	cv2.putText(frame, datetime.datetime.now().strftime("%A %d %B %Y %I:%M:%S%p"),
-		(10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
+	#cv2.putText(frame, datetime.datetime.now().strftime("%A %d %B %Y %I:%M:%S%p"),
+		#(10, frame.shape[0] - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (0, 0, 255), 1)
 
 	# show the frame and record if the user presses a key
 	#cv2.imshow("Security Feed", frame)
@@ -127,8 +127,9 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	if text == "Occupied":
 		#frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		#out.write(frame)
-		photo_name = 'photos/%s.jpg' % datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+		photo_name = 'pictures/%s.jpg' % datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 		print("Saving picture to: %s" % photo_name)
+		cv2.imwrite(photo_name, frame)
 
 	# setting to only display status upon change
 	previousText = text
