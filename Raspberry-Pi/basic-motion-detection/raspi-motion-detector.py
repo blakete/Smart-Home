@@ -3,7 +3,7 @@
 # python motion_detector.py --video videos/example_01.mp4
 
 # import the necessary packages
-import datetime
+from datetime import datetime
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from imutils.video import VideoStream
