@@ -125,7 +125,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# writing the frame if the current status is occupied
 	#if text == "Occupied" and out is not None:
 	if text == "Occupied":
-		#frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		#out.write(frame)
 		photo_name = 'pictures/%s.jpg' % datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')[:-3]
 		print("Saving picture to: %s" % photo_name)
