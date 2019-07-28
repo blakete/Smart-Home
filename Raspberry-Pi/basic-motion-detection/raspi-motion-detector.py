@@ -16,7 +16,7 @@ import cv2
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-v", "--video", help="path to the video file")
-ap.add_argument("-a", "--min-area", type=int, default=2000, help="minimum area size")
+ap.add_argument("-a", "--min-area", type=int, default=3000, help="minimum area size")
 args = vars(ap.parse_args())
 
 # video capturing
@@ -112,6 +112,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
 		print("%s Current Status: %s" % (dt, text))
 		if text == "Occupied":
+			print("Recording video to: %s" % video_name)
 			count += 1
 			# Define the codec and create VideoWriter object
 			video_name = 'videos/recording_%s.avi' % count
@@ -123,7 +124,6 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 
 	# writing the frame if the current status is occupied
 	if text == "Occupied" and out is not None:
-		print("Writing frame to %s" % video_name)
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		out.write(frame)
 
