@@ -60,8 +60,9 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	if frame is None:
 		break
 
-	# resize the frame, convert it to grayscale, and blur it
-	frame = imutils.resize(frame, width=500)
+	# resize the frame, 
+	#frame = imutils.resize(frame, width=500)
+	# convert it to grayscale, and blur it
 	gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 	gray = cv2.GaussianBlur(gray, (21, 21), 0)
 
@@ -114,8 +115,10 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 			count += 1
 			# Define the codec and create VideoWriter object
 			video_name = 'recording_%s.avi' % count
-			out = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
+			# Define the codec and create VideoWriter object
+			out = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc('M','J','P','G'), 20.0, (frame_width,frame_height))
 		else:
+			out.release()
 			out = None
 
 	# writing the frame if the current status is occupied
