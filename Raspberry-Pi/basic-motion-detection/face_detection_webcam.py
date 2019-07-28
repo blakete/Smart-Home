@@ -1,23 +1,20 @@
-# USAGE
-# python motion_detector.py
-# python motion_detector.py --video videos/example_01.mp4
+import face_recognition
+
+image = None
+face_locations = face_recognition.face_locations(image)
+
+print(f'there are {len(face_locations)} people in view')
+
 
 # import the necessary packages
 import datetime
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 from imutils.video import VideoStream
-import argparse
 import datetime
 import imutils
 import time
 import cv2
-
-# construct the argument parser and parse the arguments
-ap = argparse.ArgumentParser()
-ap.add_argument("-a", "--min-area", type=int, default=3000, help="minimum area size")
-ap.add_argument("-v", "--video", help="path to the video file")
-args = vars(ap.parse_args())
 
 # video capturing
 count = 0
@@ -25,35 +22,26 @@ frame_width = 640
 frame_height = 480
 
 # if the video argument is None, then we are reading from webcam
-if args.get("video", None) is None:
-	print("Using raspi camera...")
-	# initialize the camera and grab a reference to the raw camera capture
-	camera = PiCamera()
-	camera.resolution = (frame_width, frame_height)
-	#camera.framerate = 32
-	rawCapture = PiRGBArray(camera, size=(frame_width, frame_height))
-	time.sleep(2.0)
-# otherwise, we are reading from a video file
-else:
-	print("Using provided video file...")
-	vs = cv2.VideoCapture(args["video"])
+print("Using raspi camera...")
+# initialize the camera and grab a reference to the raw camera capture
+camera = PiCamera()
+camera.resolution = (frame_width, frame_height)
+#camera.framerate = 32
+rawCapture = PiRGBArray(camera, size=(frame_width, frame_height))
+time.sleep(2.0)
+
 
 # initialize the first frame in the video stream
 firstFrame = None
-# initializing previous text
-previousText = "Unoccupied"
 
-print("[+] Starting security feed...")
-# loop over the frames of the video
-# capture frames from the camera
+
+print("[+] Starting security camera...")
 for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-	# clear stream before next frame
 	rawCapture.truncate(0)
 
 	# grab the current frame and initialize the occupied/unoccupied text
 	frame = frame.array
 	frame = frame if args.get("video", None) is None else frame[1]
-	text = "Unoccupied"
 
 	# if the frame could not be grabbed, then we have reached the end
 	# of the video
