@@ -114,7 +114,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		if text == "Occupied":
 			count += 1
 			# Define the codec and create VideoWriter object
-			video_name = 'recording_%s.avi' % count
+			video_name = 'videos/recording_%s.avi' % count
 			# Define the codec and create VideoWriter object
 			out = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc('M','J','P','G'), 20.0, (frame_width,frame_height))
 		else:
