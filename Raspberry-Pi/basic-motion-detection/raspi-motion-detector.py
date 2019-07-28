@@ -111,21 +111,24 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	if text != previousText:
 		dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
 		print("%s Current Status: %s" % (dt, text))
-		if text == "Occupied":	
+		#if text == "Occupied":	
 			# Define the codec and create VideoWriter object
-			video_name = 'videos/%s.avi' % datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
-			print("Recording video to: %s" % video_name)
+			#video_name = 'videos/%s.avi' % datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+			#print("Recording video to: %s" % video_name)
 			# Define the codec and create VideoWriter object
-			out = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc('M','J','P','G'), 20.0, (frame_width,frame_height))
-			count += 1
-		else:
-			out.release()
-			out = None
+			#out = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc('M','J','P','G'), 20.0, (frame_width,frame_height))
+			#count += 1
+		#else:
+			#out.release()
+			#out = None
 
 	# writing the frame if the current status is occupied
-	if text == "Occupied" and out is not None:
+	#if text == "Occupied" and out is not None:
+	if text == "Occupied":
 		#frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-		out.write(frame)
+		#out.write(frame)
+		photo_name = 'photos/%s.jpg' % datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+		print("Saving picture to: %s" % photo_name)
 
 	# setting to only display status upon change
 	previousText = text
