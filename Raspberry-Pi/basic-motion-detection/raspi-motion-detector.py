@@ -122,6 +122,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	if text == "Occupied" and out is not None:
 		print("Writing frame to %s" % video_name)
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+		frame = cv2.flip(frame,0)
 		out.write(frame)
 
 	# setting to only display status upon change
