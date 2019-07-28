@@ -19,14 +19,19 @@ ap.add_argument("-v", "--video", help="path to the video file")
 ap.add_argument("-a", "--min-area", type=int, default=2000, help="minimum area size")
 args = vars(ap.parse_args())
 
+# video capturing
+count = 0
+frame_width = 640
+frame_height = 480
+
 # if the video argument is None, then we are reading from webcam
 if args.get("video", None) is None:
 	print("Using raspi camera...")
 	# initialize the camera and grab a reference to the raw camera capture
 	camera = PiCamera()
-	camera.resolution = (640, 480)
+	camera.resolution = (frame_width, frame_height)
 	#camera.framerate = 32
-	rawCapture = PiRGBArray(camera, size=(640, 480))
+	rawCapture = PiRGBArray(camera, size=(frame_width, frame_height))
 	time.sleep(2.0)
 # otherwise, we are reading from a video file
 else:
@@ -105,9 +110,24 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	if text != previousText:
 		dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
 		print("%s Current Status: %s" % (dt, text))
+		if text == "Occupied":
+			count += 1
+			# Define the codec and create VideoWriter object
+			video_name = 'recording_%s.avi' % count
+			out = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc('M','J','P','G'), 10, (frame_width,frame_height))
+		else:
+			out = None
+
+	# writing the frame if the current status is occupied
+	if text == "Occupied" and out is not None:
+		print("Writing frame to %s" % video_name)
+		out.write(frame)
+
 	# setting to only display status upon change
 	previousText = text
 
+	
+		
 	# if the `q` key is pressed, break from the lop
 	if key == ord("q"):
 		break
