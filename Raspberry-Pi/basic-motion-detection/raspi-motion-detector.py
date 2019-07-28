@@ -124,7 +124,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 
 	# writing the frame if the current status is occupied
 	if text == "Occupied" and out is not None:
-		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+		#frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		out.write(frame)
 
 	# setting to only display status upon change
