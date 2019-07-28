@@ -122,9 +122,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	if text == "Occupied" and out is not None:
 		print("Writing frame to %s" % video_name)
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-		out.open()
 		out.write(frame)
-		out.release()
 
 	# setting to only display status upon change
 	previousText = text
@@ -139,6 +137,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		print("Reset first frame!")
 
 # cleanup the camera and close any open windows
+out.release() # releasing recording
 vs.stop() if args.get("video", None) is None else vs.release()
 cv2.destroyAllWindows()
 print("[-] Exit of video feed complete")
