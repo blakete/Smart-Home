@@ -113,7 +113,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		print("%s Current Status: %s" % (dt, text))
 		if text == "Occupied":	
 			# Define the codec and create VideoWriter object
-			video_name = 'videos/%s.avi' % datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
+			video_name = 'videos/%s.avi' % datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 			print("Recording video to: %s" % video_name)
 			# Define the codec and create VideoWriter object
 			out = cv2.VideoWriter(video_name, cv2.VideoWriter_fourcc('M','J','P','G'), 20.0, (frame_width,frame_height))
