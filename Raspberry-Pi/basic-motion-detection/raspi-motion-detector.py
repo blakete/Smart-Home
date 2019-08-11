@@ -26,7 +26,7 @@ frame_height = 480
 
 # if the video argument is None, then we are reading from webcam
 if args.get("video", None) is None:
-	print("Using raspi camera...")
+	print("[+] Warming up raspi camera...")
 	# initialize the camera and grab a reference to the raw camera capture
 	camera = PiCamera()
 	camera.resolution = (frame_width, frame_height)
@@ -35,7 +35,7 @@ if args.get("video", None) is None:
 	time.sleep(2.0)
 # otherwise, we are reading from a video file
 else:
-	print("Using provided video file...")
+	print("[+] Using provided video file...")
 	vs = cv2.VideoCapture(args["video"])
 
 # initialize the first frame in the video stream
@@ -111,7 +111,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# indicate if their is a change in room status in the console
 	if text != previousText:
 		dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
-		print("%s Current Status: %s" % (dt, text))
+		print("[INFO] %s Status: %s" % (dt, text))
 		#if text == "Occupied":	
 			# Define the codec and create VideoWriter object
 			#video_name = 'videos/%s.avi' % datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
