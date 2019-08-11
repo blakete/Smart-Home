@@ -41,7 +41,7 @@ else:
 # initialize the first frame in the video stream
 firstFrame = None
 # initializing previous text
-previousText = "Unoccupied"
+previousText = "No-movement"
 
 print("[+] Starting security feed...")
 # loop over the frames of the video
@@ -53,7 +53,7 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# grab the current frame and initialize the occupied/unoccupied text
 	frame = frame.array
 	frame = frame if args.get("video", None) is None else frame[1]
-	text = "Unoccupied"
+	text = "No-movement"
 
 	# if the frame could not be grabbed, then we have reached the end
 	# of the video
@@ -92,8 +92,9 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		# compute the bounding box for the contour, draw it on the frame,
 		# and update the text
 		(x, y, w, h) = cv2.boundingRect(c)
+		# TODO record bounding box areas that may be useful for future labeling of the data
 		#cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
-		text = "Occupied"
+		text = "Movement"
 
 	# draw the text and timestamp on the frame
 	#cv2.putText(frame, "Room Status: {}".format(text), (10, 20),
@@ -124,11 +125,10 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 
 	# writing the frame if the current status is occupied
 	#if text == "Occupied" and out is not None:
-	if text == "Occupied":
+	if text == "Movement":
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		#out.write(frame)
 		photo_name = 'pictures/%s.jpg' % datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')[:-3]
-		print("Saving picture to: %s" % photo_name)
 		cv2.imwrite(photo_name, frame)
 
 	# setting to only display status upon change
