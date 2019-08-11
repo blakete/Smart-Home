@@ -44,7 +44,7 @@ firstFrame = None
 # initializing previous text
 previousText = "No-movement"
 # initializing movement counter to reset still frame reference
-referenceResetCount = 100
+referenceResetCount = 25
 count = 0
 
 print("[+] Starting security feed...")
