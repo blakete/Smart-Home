@@ -42,6 +42,9 @@ else:
 firstFrame = None
 # initializing previous text
 previousText = "No-movement"
+# initializing movement counter to reset still frame reference
+referenceResetCount = 100
+count = 0
 
 print("[+] Starting security feed...")
 # loop over the frames of the video
@@ -68,6 +71,8 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 
 	# if the first frame is None, initialize it
 	if firstFrame is None:
+		dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
+		print("[INFO] %s Set reference frame" % (dt))
 		firstFrame = gray
 		continue
 
@@ -112,6 +117,8 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	if text != previousText:
 		dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
 		print("[INFO] %s Status: %s" % (dt, text))
+		if text == "No-movement":
+			count = 0
 		#if text == "Occupied":	
 			# Define the codec and create VideoWriter object
 			#video_name = 'videos/%s.avi' % datetime.datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
@@ -126,10 +133,17 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# writing the frame if the current status is occupied
 	#if text == "Occupied" and out is not None:
 	if text == "Movement":
+		count += 1
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		#out.write(frame)
 		photo_name = 'pictures/%s.jpg' % datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')[:-3]
 		cv2.imwrite(photo_name, frame)
+		if count >= referenceResetCount:
+			firstFrame = gray
+			count = 0
+			dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
+			print("[INFO] %s Reset reference frame" % (dt))
+		
 
 	# setting to only display status upon change
 	previousText = text
