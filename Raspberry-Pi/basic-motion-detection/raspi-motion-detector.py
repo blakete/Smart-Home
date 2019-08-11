@@ -12,6 +12,7 @@ import datetime
 import imutils
 import time
 import cv2
+import os
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
