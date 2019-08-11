@@ -137,7 +137,8 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 		#out.write(frame)
 		photo_name = 'captures/%s.jpg' % datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')[:-3]
-		cv2.imwrite(photo_name, frame)
+		if not cv2.imwrite(photo_name, frame):
+			print("[WARN] Could not write image to %s" % (photo_name))
 		dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
 		print("[INFO] %s Wrote camera frame capture to %s" % (dt, photo_name))
 		if count >= referenceResetCount:
