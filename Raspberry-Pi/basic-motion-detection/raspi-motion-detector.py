@@ -138,6 +138,8 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		#out.write(frame)
 		photo_name = 'pictures/%s.jpg' % datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S.%f')[:-3]
 		cv2.imwrite(photo_name, frame)
+		dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
+		print("[INFO] %s Saved camera frame capture to %s" % (dt, photo_name))
 		if count >= referenceResetCount:
 			firstFrame = gray
 			count = 0
