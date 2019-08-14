@@ -16,7 +16,7 @@ PAGE="""\
 </head>
 <body>
 <!--<center><h1>Raspberry Pi - Surveillance Camera</h1></center>-->
-<center><img src="stream.mjpg" width="1280" height="960"></center>
+<center><img src="stream.mjpg" width=90% height=90%></center>
 </body>
 </html>
 """
