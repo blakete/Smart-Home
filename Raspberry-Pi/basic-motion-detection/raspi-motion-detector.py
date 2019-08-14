@@ -117,7 +117,8 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 	# indicate if their is a change in room status in the console
 	if text != previousText:
 		dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
-		print("[INFO] %s Status: %s" % (dt, text))
+		if text == "Movement":
+			print("[INFO] %s Status: %s" % (dt, text))
 		if text == "No-movement":
 			count = 0
 		#if text == "Occupied":	
