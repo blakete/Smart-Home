@@ -143,12 +143,12 @@ for frame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=
 		if not cv2.imwrite(fullpath, frame):
 			print("[WARN] Could not write image to %s" % (fullpath))
 		dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
-		print("[INFO] %s Wrote camera frame capture to %s" % (dt, photo_name))
+		#print("[INFO] %s Wrote camera frame capture to %s" % (dt, photo_name))
 		if count >= referenceResetCount:
 			firstFrame = gray
 			count = 0
 			dt = '{date:%Y-%m-%d_%H:%M:%S}'.format( date=datetime.datetime.now() )
-			print("[INFO] %s Reset reference frame" % (dt))
+			#print("[INFO] %s Reset reference frame" % (dt))
 		
 
 	# setting to only display status upon change
