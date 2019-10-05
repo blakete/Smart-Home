@@ -35,7 +35,7 @@ function toggleLock()
         var request = new XMLHttpRequest();
         if("withCredentials" in request)
         {
-            request.open("GET", "http://192.168.1.137/5/off/", true);
+            request.open("GET", "http://10.1.28.72/5/off/", true);
             request.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     console.log("unlock command received!");
@@ -54,7 +54,7 @@ function toggleLock()
         var request = new XMLHttpRequest();
         if("withCredentials" in request)
         {
-            request.open("GET", "http://192.168.1.137/5/on/", true);
+            request.open("GET", "http://10.1.28.72/5/on/", true);
             request.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     console.log("lock command received!");
